@@ -17,6 +17,12 @@ Prerequisites
 Build process
 -------------
 
-    git submodule update --recursive --remote
+Clone or update the submodule using
+
+    git submodule update --init --recursive   # If first time
+    git submodule update --recursive --remote # Otherwise
+
+then
+
     bash misc/imgfetch.sh
     make
