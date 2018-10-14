@@ -7,7 +7,7 @@ TEXS = $(patsubst %.md, %.tex, $(SRCS))
 book: e-maxx.pdf misc/imgfetch.sh
 
 e-maxx.pdf: e-maxx.tex
-	latexmk $<
+	latexmk -pdf $<
 
 e-maxx.tex: $(TEXS) misc/assemble.sh misc/template.tex
 	bash misc/assemble.sh > $@
