@@ -17,7 +17,7 @@ while (<>) {
     }
     
     # Make relative heml links into section links
-    s#\[([^\]]*)\]\(\.\.?/([^)]+)/([^)]+).html\)#\\hyperref[sec:\2_\3]{\1}#g;
+    s#\[([^\]]*)\]\(\.{0,2}?/([^)]+)/([^)]+).html\)#\\hyperref[sec:\2_\3]{\1}#g;
 
     # Try to fix some other internal links
     s#\[([^\]]*)\]\((?!http)[^)]*\#([^)]*)\)#\\hyperref[\2]{\1}#g;
