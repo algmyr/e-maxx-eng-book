@@ -14,7 +14,7 @@ while (<>) {
     s#\[([^\]]*)\]\(\.\.?/([^)]+)/([^)]+).html\)#\\hyperref[sec:\2_\3]{\1}#g;
 
     # Make lower level headers something unique
-    s/^#(#+) (.*)/\1 \2 {#$label$i}/;
+    s/^#(#+) (.*)/#\1 \2 {#$label$i}/;
     
     # environment fix
     s/eqnarray/align/g;
