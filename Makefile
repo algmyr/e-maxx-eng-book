@@ -13,7 +13,7 @@ e-maxx.tex: $(TEXS) misc/assemble.sh misc/template.tex
 	bash misc/assemble.sh > $@
 
 %.tex: %.md misc/fixes.pl
-	perl misc/fixes.pl < $< | pandoc -f markdown -o $@
+	perl misc/fixes.pl $< | pandoc -f markdown -o $@
 
 clean:
 	@rm -f $(TEXS)

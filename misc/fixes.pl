@@ -1,4 +1,21 @@
+# Label from file path
+$fname=@ARGV[0];
+$fname =~ m#src/(.*).md$#;
+$label = $1;
+$label = "sec:".$label;
+$label =~ y#/#_#;
+
+$i = 0;
 while (<>) {
+    $i=$i+1;
+
+    # Top level headers
+    s/^# (.*)/# \1 {#$label}/;
+    s#\[([^\]]*)\]\(\.\.?/([^)]+)/([^)]+).html\)#\\hyperref[sec:\2_\3]{\1}#g;
+
+    # Make lower level headers something unique
+    s/^#(#+) (.*)/\1 \2 {#$label$i}/;
+    
     # environment fix
     s/eqnarray/align/g;
 

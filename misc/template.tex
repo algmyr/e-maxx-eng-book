@@ -12,6 +12,10 @@
 \usepackage{microtype}
 \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
 
+% Clearpage after sections
+\usepackage{titlesec}
+\newcommand{\sectionbreak}{\clearpage}
+
 \PassOptionsToPackage{hyphens}{url} % url is loaded by hyperref
 \usepackage[unicode=true]{hyperref}
 \PassOptionsToPackage{usenames,dvipsnames}{color} % color is loaded by hyperref
@@ -82,9 +86,6 @@
 
 %\usepackage[a4paper,top=1.5in,bottom=1.5in,outer=1.1in,inner=1.9in]{geometry}
 \usepackage[a4paper,top=1.5in,bottom=1.5in,left=1.5in,right=1.5in]{geometry}
-
-\usepackage{titlesec}
-\newcommand{\sectionbreak}{\clearpage}
 
 \usepackage{tocstyle}
 
