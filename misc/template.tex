@@ -27,6 +27,10 @@
             breaklinks=true}
 \urlstyle{same}  % don't use monospace font for urls
 
+% Reset numbering per part
+\usepackage{chngcntr}
+\counterwithin*{chapter}{part}
+
 \usepackage[russian,english]{babel}
 
 % essentially the pandoc standard highlighting
