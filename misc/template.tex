@@ -93,13 +93,22 @@
 
 \usepackage{tocstyle}
 
+% Store part title
+\let\Oldpart\part
+\newcommand\parttitle{}
+\renewcommand\part[1]{\Oldpart{#1}\renewcommand{\parttitle}{#1}}
+
 %\usepackage[parfill]{parskip}
 \usepackage{fancyhdr}
 \pagestyle{fancy}
-\fancyhead{}
+\fancyhf{}
+%\fancyhead[RE]{\footnotesize\textsc{Part \thepart.\ \parttitle,~~Chapter \thechapter.\ \leftmark}}
+\fancyhead[RE]{\footnotesize\textsc{\parttitle,~~Chapter \thechapter.\ \leftmark}}
+\fancyhead[LO]{\footnotesize\textsc{\rightmark}}
 \fancyhead[LE,RO]{\footnotesize\thepage}
-\fancyhead[RE]{\footnotesize\leftmark}
-\fancyhead[LO]{\footnotesize\rightmark}
+
+\renewcommand\chaptermark[1]{\markboth{#1}{}} 
+\renewcommand\sectionmark[1]{\markright{\thesection.\ #1}}
 
 % Figure centering
 \let\oldincludegraphics\includegraphics
