@@ -1,39 +1,17 @@
-\documentclass[11pt,a4paper]{book}
+\documentclass[11pt,a4paper,oneside]{book}
 
+% Basic packages
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
-
 \usepackage{lmodern}
 \usepackage{amssymb,amsmath}
-\usepackage{ifxetex,ifluatex}
 \usepackage{fixltx2e} % provides \textsubscript
-
 \usepackage{upquote}
 \usepackage{microtype}
 \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
-
-% Clearpage after sections
-\usepackage{titlesec}
-\newcommand{\sectionbreak}{\clearpage}
-
-\PassOptionsToPackage{hyphens}{url} % url is loaded by hyperref
-\usepackage[unicode=true]{hyperref}
-\PassOptionsToPackage{usenames,dvipsnames}{color} % color is loaded by hyperref
-\hypersetup{
-            colorlinks=true,
-            linkcolor=[rgb]{0.1,0.1,1},
-            citecolor=[rgb]{0.1,0.1,1},
-            urlcolor=[rgb]{0.1,0.1,1},
-            breaklinks=true}
-\urlstyle{same}  % don't use monospace font for urls
-
-% Reset numbering per part
-\usepackage{chngcntr}
-\counterwithin*{chapter}{part}
-
 \usepackage[russian,english]{babel}
 
-% essentially the pandoc standard highlighting
+% Essentially the pandoc standard highlighting
 \usepackage{color}
 \usepackage{fancyvrb}
 \newcommand{\VerbBar}{|}
@@ -72,43 +50,53 @@
 \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{#1}}}
 \newcommand{\NormalTok}[1]{#1}
 
-
-
 \usepackage{graphicx,grffile}
 \usepackage{float}
 
+%%%
+
+% Misc
 \setlength{\emergencystretch}{3em}  % prevent overfull lines
 \providecommand{\tightlist}{%
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 
-% set default figure placement
+% Clearpage after sections
+\usepackage{titlesec}
+\newcommand{\sectionbreak}{\clearpage}
+
+% Hyperref setup, needs to be below titlesec and above chngcntr, because LaTeX
+\PassOptionsToPackage{hyphens}{url} % url is loaded by hyperref
+\usepackage[unicode=true]{hyperref}
+\PassOptionsToPackage{usenames,dvipsnames}{color} % color is loaded by hyperref
+\hypersetup{
+            colorlinks=true,
+            linkcolor=[rgb]{0.1,0.1,1},
+            citecolor=[rgb]{0.1,0.1,1},
+            urlcolor=[rgb]{0.1,0.1,1},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+
+% Reset chapter numbering per part
+\usepackage{chngcntr}
+\counterwithin*{chapter}{part}
+
+% Set default figure placement to have figures in-place
+% Not nice to LaTeX, but makes thing similar to the HTML
 \makeatletter
 \def\fps@figure{H}
 %\def\fps@figure{htbp}
 \makeatother
 
-
-%\usepackage[a4paper,top=1.5in,bottom=1.5in,outer=1.1in,inner=1.9in]{geometry}
-\usepackage[a4paper,top=1.5in,bottom=1.5in,left=1.5in,right=1.5in]{geometry}
-
-\usepackage{tocstyle}
-
-% Store part title
-\let\Oldpart\part
-\newcommand\parttitle{}
-\renewcommand\part[1]{\Oldpart{#1}\renewcommand{\parttitle}{#1}}
-
-%\usepackage[parfill]{parskip}
-\usepackage{fancyhdr}
-\pagestyle{fancy}
-\fancyhf{}
-%\fancyhead[RE]{\footnotesize\textsc{Part \thepart.\ \parttitle,~~Chapter \thechapter.\ \leftmark}}
-\fancyhead[RE]{\footnotesize\textsc{\parttitle,~~Chapter \thechapter.\ \leftmark}}
-\fancyhead[LO]{\footnotesize\textsc{\rightmark}}
-\fancyhead[LE,RO]{\footnotesize\thepage}
-
-\renewcommand\chaptermark[1]{\markboth{#1}{}} 
-\renewcommand\sectionmark[1]{\markright{\thesection.\ #1}}
+% Page geometry
+\makeatletter
+\if@twoside
+    % book layout, different margins for odd and even
+    \usepackage[a4paper,top=1.5in,bottom=1.5in,outer=1.8in,inner=1.2in]{geometry}
+\else
+    % screen layout, symmetric margins
+    \usepackage[a4paper,top=1.5in,bottom=1.5in,left=1.5in,right=1.5in]{geometry}
+\fi
+\makeatother
 
 % Figure centering
 \let\oldincludegraphics\includegraphics
@@ -126,9 +114,54 @@
 \makeatother
 \setkeys{Gin}{width=\ScaleIfNeeded}
 
-% MathJax compatability
+% MathJax compatibility
 \def\lt{<}
 \def\gt{>}
+
+% Store part title and suppress page numbers
+\let\Oldpart\part
+\newcommand\parttitle{}
+\renewcommand\part[1]{\Oldpart{#1}\thispagestyle{empty}\renewcommand{\parttitle}{#1}}
+
+% Header setup
+\usepackage{fancyhdr}
+\usepackage{changepage}
+\strictpagecheck
+\pagestyle{fancy}
+
+\makeatletter
+\if@twoside
+    % Main header
+    \fancyhf{}
+    \fancyhead[RE]{\footnotesize\textsc{\rightmark}}
+    \fancyhead[LO]{\footnotesize\textsc{\parttitle,~~Chapter \thechapter.\ \leftmark}}
+    \fancyhead[LE,RO]{\footnotesize\thepage}
+    % Plain header
+    \fancypagestyle{plain}{%
+    \fancyhf{}
+    \fancyhead[LE,RO]{\footnotesize\thepage}
+    \renewcommand{\headrulewidth}{0pt}
+    \renewcommand{\footrulewidth}{0pt}}
+\else
+    % Main header
+    \fancyhf{}
+    \fancyhead[L]{\footnotesize\textsc{\checkoddpage\ifoddpage{\rightmark}\else{\parttitle,~~Chapter \thechapter.\ \leftmark}\fi}}
+    \fancyhead[R]{\footnotesize\thepage}
+    % Plain header
+    \fancypagestyle{plain}{%
+    \fancyhf{}
+    \fancyhead[R]{\footnotesize\thepage}
+    \renewcommand{\headrulewidth}{0pt}
+    \renewcommand{\footrulewidth}{0pt}}
+\fi
+\makeatother
+
+\renewcommand\chaptermark[1]{\markboth{#1}{}} 
+\renewcommand\sectionmark[1]{\markright{\thesection.\ #1}}
+
+% Make empty pages empty
+\usepackage{emptypage}
+
 
 \title{\textsc{{\Huge Algorithms} \\ {\Large translations and community additions}}}
 \author{
@@ -137,20 +170,26 @@
 \date{}
 
 \begin{document}
-\pagenumbering{gobble}
-\maketitle
 
+% Title page
+\pagenumbering{gobble}
+\pagestyle{empty}
+\maketitle
+\cleardoublepage
+
+% Table of contents
 \pagenumbering{roman}
 {
 \hypersetup{linkcolor=black}
 \setcounter{tocdepth}{1}
 \tableofcontents
 }
-
 \cleardoublepage
+
+% Content has normal numbering and has headers
 \pagenumbering{arabic}
+\pagestyle{fancy}
 
 % CONTENT GOES HERE
-
 
 \end{document}

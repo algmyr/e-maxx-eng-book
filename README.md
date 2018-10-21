@@ -26,3 +26,22 @@ then
 
     bash misc/imgfetch.sh
     make
+
+Page layout
+-----------
+
+Two layouts are available for easy use: `oneside` and `twoside`. Switch between the two by editing the first line of `template.tex`.
+
+### oneside
+The default and is a good fit for on-screen reading.
+
+* no extra blank pages
+* symmetric margins
+* headers have page numbering on the right side
+
+### twoside
+A good fit for books.
+
+* blank pages are added to make parts and chapters start on even pages
+* margins are non-symmetric for a nicer experience with an open book (slimmer inner margins)
+* headers have page numbering on the outside
