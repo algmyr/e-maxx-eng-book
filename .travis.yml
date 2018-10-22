@@ -1,0 +1,12 @@
+language: r
+install:
+    - pip install --user pandocfilters
+    - tlmgr install latexmk chngcntr emptypage
+cache:
+    - packages
+    - pip
+before_script:
+    - git submodule update --init --recursive --remote
+    - bash misc/imgfetch.sh
+script:
+    - make travis
