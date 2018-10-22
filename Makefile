@@ -1,16 +1,16 @@
 SRCS = $(wildcard e-maxx-eng/src/*/*.md)
 TEXS = $(patsubst %.md, %.tex, $(SRCS))
+LATEXMK_FLAGS = -pdf
 
 .PHONY: all clean book
 
 # Book
 book: e-maxx.pdf misc/imgfetch.sh
-
-travis: LATEXMK_FLAGS = -interaction=nonstopmode
+travis: LATEXMK_FLAGS += -interaction=nonstopmode
 travis: book
 
 e-maxx.pdf: e-maxx.tex
-	latexmk -pdf ${LATEXMK_FLAGS} $<
+	latexmk ${LATEXMK_FLAGS} $<
 
 e-maxx.tex: $(TEXS) misc/assemble.sh misc/template.tex
 	bash misc/assemble.sh > $@
