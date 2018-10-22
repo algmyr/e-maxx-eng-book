@@ -21,8 +21,8 @@ Build process
 
 Clone or update the submodule using
 
-    git submodule update --init --recursive   # If first time
-    git submodule update --recursive --remote # Otherwise
+    git submodule update --init --recursive --remote  # If first time
+    git submodule update --recursive --remote         # Otherwise
 
 then
 
