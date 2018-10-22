@@ -1,6 +1,8 @@
 e-maxx-eng algorithms book
 ==========================
 
+[![Build Status](https://travis-ci.org/algmyr/e-maxx-eng-book.svg?branch=master)](https://travis-ci.org/algmyr/e-maxx-eng-book)
+
 Scripts to build the articles in the https://github.com/e-maxx-eng/e-maxx-eng project into book form. A (hopefully up to date) preview can be found at: http://web.student.chalmers.se/~algmyr/upload/e-maxx.pdf
 
 Prerequisites
