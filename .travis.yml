@@ -1,16 +1,24 @@
 branches:
   only:
-    - master
-
+  - master
 language: r
 install:
-    - pip install --user pandocfilters
-    - tlmgr install latexmk chngcntr emptypage
+- pip install --user pandocfilters
+- tlmgr install latexmk chngcntr emptypage
 cache:
-    - packages
-    - pip
+- packages
+- pip
 before_script:
-    - git submodule update --init --recursive --remote
-    - bash misc/imgfetch.sh
+- git submodule update --init --recursive --remote
+- bash misc/imgfetch.sh
 script:
-    - make travis
+- make travis
+after_success:
+- scp -o "StrictHostKeyChecking no" -i .ssh/id_rsa e-maxx.pdf $DESTINATION
+env:
+  global:
+    secure: iIYdPy9L/fFNm8FPhKx5vE/oA4faMMFFdP4n1gyB9guucVHIemSgOqKstfqG0vaR//qGQiwLTm/jJGjCI9n1vUuI9PKMSkDhbv+s5YklJDV2S51lYI1QErifbqS+XaWYDuHrw5N/3waBiph+ExW0J9u+ymgMOEZ+AdETeLaC1Xmk/1O+VnbmErlBi2taLE96+wYjUgwCycfTFsKFhhRxG+StTUE8gTJN7nIJzSAo9xHDKf9yI7BJAZnJXsr7/no6wBk50Nak3iv+A/85atKddz8j4fyhSE0G7u/otkIFamotVXHkB2yqN/HKom34WKxioM3oJanoFjsy94M/tUWsI6kX3B2+mS8A1nSp3b1sdOyIxkljScUoKXkxWZXOzsX4HiM4HFHDhIxxLJ5rRE9+RILxo3iBdZyfEn9lDk+i4vRpifGiNNxES71eDLuolmx1zbiQgFcqG8z33JN9ZChVUXsmuRDO+Pn5EkEpHMZVFb/6zE9hInlXqX/L7J0hFsT173t4DjJ3RbKUhQ6JOakdDabWEEKArG1beIyu39dnbo1iRr/tn6/SKdet9d9aUzshic2VVehmK3pgHMatUqslN3VQbY0ipqy5kkIMd7yfyzJa0uoneriAECKcMIjvJX8zdiAnXAowZGPlI0dFyZs1dDa2UJTFK776GNn3qEEVpdw=
+before_install:
+- openssl aes-256-cbc -K $encrypted_e66718d79b58_key -iv $encrypted_e66718d79b58_iv
+  -in ssh.tar.enc -out ssh.tar -d
+- tar xvf ssh.tar
