@@ -1,11 +1,13 @@
 # Label from file path
-$fname=@ARGV[0];
+my $fname=@ARGV[0];
 $fname =~ m#src/(.*).md$#;
-$label = $1;
+my $label = $1;
 $label = "sec:".$label;
 $label =~ y#/#_#;
 
-$i = 0;
+my @lines;
+
+my $i = 0;
 while (<>) {
     $i=$i+1;
 
@@ -22,13 +24,8 @@ while (<>) {
     # Try to fix some other internal links
     s#\[([^\]]*)\]\((?!http)[^)]*\#([^)]*)\)#\\hyperref[\2]{\1}#g;
 
-    
     # environment fix
     s/eqnarray/align/g;
-
-    # use unnumbered environments
-    s/\$\$\\begin\{(align|eqnarray)\}/\\begin{\1*}/g;
-    s/\\end\{(align|eqnarray)\}\$\$/\\end{\1*}/g;
 
     # pandoc is bad with subscripts at times (can we even fix this?)
     s/\\_\\text\{/_\\text\{/g;
@@ -63,6 +60,15 @@ while (<>) {
     # math fix
     s/\$\\\*\$/\$\*\$/g;
 
-    print;
+    push(@lines, $_);
 }
+
+$content = join('',@lines);
+
+# use unnumbered environments (special, match is allowed between lines)
+$content =~ s/\$\$[\S\s]?\\begin\{(align|eqnarray)\}/\\begin{\1*}/g;
+$content =~ s/\\end\{(align|eqnarray)\}[\S\s]?\$\$/\\end{\1*}/g;
+
+print $content;
+
 print "\n\n";
