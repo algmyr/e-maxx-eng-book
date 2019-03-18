@@ -14,6 +14,8 @@ while read line; do
     fi
 done < e-maxx-eng/src/index.md
 
-sed '/^% CONTENT GOES HERE$/r'$TEMPFILE misc/template.tex
+
+
+sed '/^% CONTENT GOES HERE$/r'$TEMPFILE <(sed "s/LASTCOMMIT/$(git rev-parse --short HEAD:e-maxx-eng)/" misc/template.tex)
 rm $TEMPFILE
 )
