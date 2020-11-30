@@ -42,6 +42,9 @@ while (<>) {
     #                         <- base->
     #  <- label -><------- url ------->
     s#!\[([^]]*)\]\(([^/)]*/)*([^)]+)\)#![\1](\&imgroot\&/\3)#g;
+
+    # Gif doesn't play well with latex
+    s#!\[Visual\]\(&imgroot&/minkowski.gif\)#[minkowski.gif](https://raw.githubusercontent.com/e-maxx-eng/e-maxx-eng/master/img/minkowski.gif)#;
     
     # Expand image root
     s#&imgroot&#e-maxx-eng/img#g;
@@ -59,6 +62,9 @@ while (<>) {
 
     # math fix
     s/\$\\\*\$/\$\*\$/g;
+
+    # amsmath fix
+    s/\\over\b/\\youreallyshouldnotuseover/g;
 
     push(@lines, $_);
 }
