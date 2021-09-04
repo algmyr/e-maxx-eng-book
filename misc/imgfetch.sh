@@ -1,9 +1,9 @@
 #!/bin/bash
 
 # Move to image folder
-cd `dirname "$0"`/../e-maxx-eng/img
+cd `dirname "$0"`/../e-maxx-eng/static/img
 
-grep -hroP 'https?://[^ ]*(png|jpe?g)' ../src |
+grep -hroP 'https?://[^ ]*(png|jpe?g)' ../../src |
 while read url; do
     wget -nc "$url"
 done
