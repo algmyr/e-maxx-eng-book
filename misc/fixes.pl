@@ -47,7 +47,7 @@ while (<>) {
     s#!\[Visual\]\(&imgroot&/minkowski.gif\)#[minkowski.gif](https://raw.githubusercontent.com/e-maxx-eng/e-maxx-eng/master/img/minkowski.gif)#;
     
     # Expand image root
-    s#&imgroot&#e-maxx-eng/img#g;
+    s#&imgroot&#e-maxx-eng/static/img#g;
 
     # code fixes
     s! ?<span class="toggle-code">[^<]*</span>!!g;
@@ -65,6 +65,9 @@ while (<>) {
 
     # amsmath fix
     s/\\over\b/\\youreallyshouldnotuseover/g;
+
+    # try_kuhn hotfix
+    s/\\textrm\{try_kuhn\}/\\textrm\{try\\_kuhn\}/g;
 
     push(@lines, $_);
 }
