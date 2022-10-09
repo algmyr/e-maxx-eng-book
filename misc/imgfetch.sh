@@ -1,7 +1,9 @@
 #!/bin/bash
 
 # Move to image folder
-cd `dirname "$0"`/../e-maxx-eng/static/img
+readonly IMG_PATH="$(dirname "$0")/../e-maxx-eng/static/img"
+mkdir -p "${IMG_PATH}"
+cd "${IMG_PATH}"
 
 grep -hroP 'https?://[^ ]*(png|jpe?g)' ../../src |
 while read url; do
